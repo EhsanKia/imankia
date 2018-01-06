@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" ng-app="ImanApp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="image" content="/static/img/header-logo.png" />
+	<meta name="description" content="Iman Kia's Portfolio Website">
+	<meta name="keywords" content="Iman Kia,portfolio,art,industrial design,contact,Iman">
+	<meta name="author" content="Iman Kia">
+	<title>Iman Kia :: Home</title>
+
+	<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.png">
+	<link rel="stylesheet" href="/static/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.min.js"></script>
+	<script src="/static/js/prefixfree.min.js"></script>
+	<script src="/static/js/spin.min.js"></script>
+	<script type="text/javascript">
+		var cover_images = [
+			"canal.jpg",
+			"Bi Cover.jpg",
+			"Tisch Cover.jpg",
+			"Tramway Cover.jpg",
+			"Maestro Cover.jpg",
+			"Panache Cover.jpg",
+			"Samand K14.jpg",
+			"Weber Cover.jpg"
+		];
+
+		WebFontConfig = {
+			google: {families: ['Cabin:400,700:latin', 'Crimson+Text::latin']},
+			active: function(){
+				var s = angular.element(document.body).scope();
+				s.$apply(s.fontLoaded = true);
+			}
+		};
+		(function() {
+			var wf = document.createElement('script');
+			wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+				'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+			wf.type = 'text/javascript';
+			wf.async = 'true';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(wf, s);
+		})();
+	</script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-44323325-1', 'imankia.com');
+		ga('send', 'pageview');
+	</script>
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript" src="/static/js/gfyCollection.js"></script>
+	<script type="text/javascript" src="/static/js/gfyObject.js"></script>
+	<script type="text/javascript">stLight.options({publisher: "d72d5b1d-7752-4b84-b79b-dd0e18b8c548", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+	<script src="/static/js/main.js"></script>
+</head>
+<body ng-controller="ImanCtrl">
+	<div id="container" ng-show="fontLoaded">
+		<header>
+			<a ng-click="goToPage('home')" 		class="nav home">Iman Kia</a>
+			<span style="white-space:nowrap">
+			<a ng-click="goToPage('blog')" 		class="nav" ng-class="{selected: currentPage=='blog'}" 		>Blog</a>
+			<a ng-click="goToPage('portfolio')"	class="nav" ng-class="{selected: currentPage=='portfolio'}"	>Portfolio</a>
+			<a ng-click="goToPage('about')" 	class="nav" ng-class="{selected: currentPage=='about'}"		>About</a>
+			<a ng-click="goToPage('contact')" 	class="nav" ng-class="{selected: currentPage=='contact'}" 	>Contact</a>
+			</span>
+		</header>
+
+		<div id="header2">
+			<a ng-click="goToPage('home')" 		class="nav home">Iman Kia</a>
+			<span style="white-space:nowrap">
+			<a ng-click="goToPage('blog')" 		class="nav" ng-class="{selected: currentPage=='blog'}" 		>Blog</a>
+			<a ng-click="goToPage('portfolio')"	class="nav" ng-class="{selected: currentPage=='portfolio'}"	>Portfolio</a>
+			<a ng-click="goToPage('about')" 	class="nav" ng-class="{selected: currentPage=='about'}"		>About</a>
+			<a ng-click="goToPage('contact')" 	class="nav" ng-class="{selected: currentPage=='contact'}" 	>Contact</a>
+			</span>
+		</div>
+
+		<div id="slider" ng-if="currentPage=='home'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
+			<img ng-show="currentCover==$index" ng-repeat="url in FRONT_IMAGES" ng-src="/static/img/c/{{url}}" ng-animate="{show: 'img-show', hide: 'img-hide'}">
+		</div>
+
+		<div id="blog" ng-if="currentPage=='blog'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
+			<div style="width: 700px; height: 10px; margin: auto">
+				<a ng-show="!opened_tags" class="tagsToggle" ng-click="opened_tags=1;toggleTagMenu();">&#9658; Tags</a>
+				<a ng-show="opened_tags" class="tagsToggle selected" ng-click="opened_tags=0;toggleTagMenu();">&#9660; Tags</a>
+				<input class="search-bar" type="text" ng-model="blogFilter" placeholder="SEARCH">
+			</div>
+			<div ng-show="opened_tags" class="tagList">
+				<a ng-repeat="t in TAGS | orderBy:'toLowerCase()'" class="tag" ng-click="toggleTag($event, '{{t}}')"><span>{{t}}</span></a>
+				<hr style="margin-top: 28px;">
+			</div>
+			<div id="posts">
+				<article ng-repeat="p in posts | tagFilter:tag | filter:blogFilter | page:PPP:blogPage" posts-loop>
+					<a class="title" href="#/blog/p{{p.id}}" ng-click="toggle({{p.id}}, $event)">{{p.title}}</a>
+					<div class="date">{{p.date[0]}} &bull; {{MONTH[p.date[1]]}} &bull; {{p.date[2]}}</div>
+					<div class="content">
+						<p class="post">
+							<span id="post{{p.id}}" ng-bind-html-unsafe='parse(p.body)'></span>
+						</p>
+						<div class="logo" ng-class="{hidden: opened_{{p.id}}}">
+							<a ng-click="toggle({{p.id}})"><img ng-src="static/img/l/{{p.image}}"></a>
+						</div>
+						<br>
+						<a class="readmore" ng-show="!opened_{{p.id}}" ng-click="opened_{{p.id}}=1;open({{p.id}})">Read more...</a>
+						<a class="readmore" ng-show="opened_{{p.id}}" ng-click="opened_{{p.id}}=0;close({{p.id}})">&uarr; Collapse</a>
+						<span class="share" ng-show="opened_{{p.id}}">
+							<span class='st_googleplus' st_title='{{p.title}}' st_url='http://imankia.com/#/blog/p{{p.id}}'></span>
+							<span class='st_facebook' st_title='{{p.title}}' st_url='http://imankia.com/#/blog/p{{p.id}}'></span>
+							<span class='st_twitter' st_title='{{p.title}}' st_url='http://imankia.com/#/blog/p{{p.id}}'></span>
+							<span class='st_reddit' st_title='{{p.title}}' st_url='http://imankia.com/#/blog/p{{p.id}}'></span>
+						</span>
+					</div>
+					<hr>
+				</article>
+			</div>
+			<div class="page-index">
+				<span ng-repeat="i in range((posts | tagFilter:tag | filter:blogFilter).length/PPP)">
+					<a ng-class="{selected: blogPage==$index}" ng-click="setBlogPage($index)">{{$index + 1}}</a>
+					<span ng-if="!$last">&bull;</span>
+				</span>
+			</div>
+		</div>
+
+		<div id="portfolio" ng-if="currentPage=='portfolio'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
+			<div style="margin-top: 55px" ng-show="activeArt < 0 || activeArt >= arts.length" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
+				<figure class="art" ng-hide="p.hidden" ng-repeat="p in arts" ng-click="openArt($index)">
+					<img ng-src="/static/img/a/{{p.image}}" alt="">
+					<figcaption>
+						<h3>{{p.title}}</h3>
+						<span>{{p.summary}}</span>
+					</figcaption>
+				</figure>
+			</div>
+			<div id="art-carousel" ng-show="activeArt >= 0 && activeArt < arts.length">
+				<article class="art-post" ng-repeat="p in arts" ng-show="$index == activeArt" ng-animate="{show: 'art-show', hide: 'art-hide'}">
+					<a class="title" href="#/portfolio/p{{p.id}}">{{p.title}}</a>
+					<div class="date summary">{{p.summary}}</div>
+					<div class="content" ng-bind-html-unsafe='parse(p.body)'></div>
+				</article>
+				<div class="arrow left" ng-click="openArt(activeArt-1)"></div>
+				<div class="arrow right" ng-click="openArt(activeArt+1)"></div>
+			</div>
+		</div>
+
+		<div id="about" ng-if="currentPage=='about'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
+			<img src="/static/img/designing.jpg">
+			<p style="font-size: 12pt; width: 700px; line-height: 1.75">
+				My name is Iman Kia. I am an Iranian-Quebecer, currently living in Montreal. I am an industrial designer recently graduated from the University of Montreal.
+				<br><br>
+
+				Since my childhood, I've been fascinated with the production of everyday's objects and drawing has been a constant part of my life. By combining these two, it makes sense that I am here.
+				I use this platform to share with you my projects and also some updates about what I am up to in my blog. Feel free to visit my <a target="_blank" href="https://ca.linkedin.com/in/imankia"><b>Linkedin</b></a> for more info about my professional background.
+				<br><br>
+				I believe that learning is a lifelong process and I'm always open to suggestions. So don't hesitate to <a href="#/contact"><b>contact me</b></a>.
+			</p>
+		</div>
+
+		<div id="contact" ng-if="currentPage=='contact'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
+			<div style="width: 750px; margin: auto;">
+				<br><br>
+				<p style="font-size: 12pt">
+					I'd be glad to read about your suggestions, requests or any thoughts you want to share.
+				</p><br>
+				<input type="text" size="25" ng-model="contact.name" placeholder="Name">
+				<br>
+				<input type="text" size="25" ng-model="contact.email" placeholder="Email">
+				<br>
+				<textarea cols="80" rows="10" ng-model="contact.message" placeholder="Message"></textarea>
+				<button ng-disabled="contact.sending" ng-click="sendEmail()">{{contact.submit}}</button>
+			</div>
+		</div>
+
+		<div style="padding-bottom: 85px;"></div>
+	</div>
+	<footer ng-show="fontLoaded">
+			<span class="copyright">&copy; 2017 Iman Kia&nbsp;&nbsp;<b>•</b>&nbsp;</span>
+			<a class="mail" href="mailto:contact@imankia.com">contact@imankia.com</a>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,8 @@
+arts/
+posts/
+scripts/
+app.yaml
+deploy.bat
+dev_server.bat
+main.py
+main.pyc

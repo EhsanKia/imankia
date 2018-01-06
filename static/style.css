@@ -73,7 +73,7 @@ a {
 	margin-bottom: -8px;
 	width: 32px;
 	height: 30px;
-	background: url("img/header-logo.png") no-repeat;
+	background: url("static/img/header-logo.png") no-repeat;
 	content: ' ';
 }
 
@@ -510,10 +510,10 @@ footer{
 	background-color: rgba(0,0,0,0.5);
 }
 
-span.stButton .googleplus{background-image: url('img/sharethis/gp.png')}
-span.stButton .facebook{background-image: url('img/sharethis/fb.png')}
-span.stButton .twitter{background-image: url('img/sharethis/twitter.png')}
-span.stButton .reddit{background-image: url('img/sharethis/reddit.png')}
+span.stButton .googleplus{background-image: url('static/img/sharethis/gp.png')}
+span.stButton .facebook{background-image: url('static/img/sharethis/fb.png')}
+span.stButton .twitter{background-image: url('static/img/sharethis/twitter.png')}
+span.stButton .reddit{background-image: url('static/img/sharethis/reddit.png')}
 
 .arrow {
 	position: fixed;
@@ -536,11 +536,11 @@ span.stButton .reddit{background-image: url('img/sharethis/reddit.png')}
 
 .right {margin-left: 500px;}
 .right:after, .right:before {left: 100%;}
-.right:before {background-image: url('img/rarrow.png');}
+.right:before {background-image: url('static/img/rarrow.png');}
 
 .left {margin-left: -500px;}
 .left:after, .left:before {right: 100%;}
-.left:before {background-image: url('img/larrow.png');}
+.left:before {background-image: url('static/img/larrow.png');}
 
 .gfyPreLoadCanvas, .gfyVid {
 	width: 700px;

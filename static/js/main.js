@@ -190,9 +190,17 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 		};
 
 		var request = {
-			url: 'https://script.google.com/macros/s/AKfycbz6-egUvKmAC_GNhmXRiJBFWKaoua6h43fbDh0w/exec',
+			url: 'https://script.google.com/macros/s/AKfycbymFIHDdybdAd0P4Nm7ox5v8xWSEF-SfNelzVCtdAjlZBV8wD0/exec',
 			data: postData,
-			method : 'POST'
+			method : 'POST',
+			transformRequest: (obj) => {
+				var str = [];
+				for(var p in obj) str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			headers: {
+        		"Content-Type": "application/x-www-form-urlencoded"
+    		},
 		};
 
 		$http(request).success((data) => {
@@ -209,6 +217,8 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 				$scope.contact.sending = false;
 				$scope.contact.submit = "Submit Message";
 			}, 5000);
+		}).error((data) => {
+			console.log(data);
 		});
 	};
 

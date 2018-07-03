@@ -162,7 +162,7 @@
 		</div>
 
 		<div id="contact" ng-if="currentPage=='contact'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
-			<div style="width: 750px; margin: auto;">
+			<div style="width: 550px; margin: auto;">
 				<br><br>
 				<p style="font-size: 12pt">
 					I'd be glad to read about your suggestions, requests or any thoughts you want to share.
@@ -171,7 +171,7 @@
 				<br>
 				<input type="text" size="25" ng-model="contact.email" placeholder="Email">
 				<br>
-				<textarea cols="80" rows="10" ng-model="contact.message" placeholder="Message"></textarea>
+				<textarea cols="60" rows="10" ng-model="contact.message" placeholder="Message"></textarea>
 				<button ng-disabled="contact.sending" ng-click="sendEmail()">{{contact.submit}}</button>
 			</div>
 		</div>
@@ -179,7 +179,7 @@
 		<div style="padding-bottom: 85px;"></div>
 	</div>
 	<footer ng-show="fontLoaded">
-			<span class="copyright">&copy; 2017 Iman Kia&nbsp;&nbsp;<b>•</b>&nbsp;</span>
+			<span class="copyright">&copy; 2018 Iman Kia&nbsp;&nbsp;<b>•</b>&nbsp;</span>
 			<a class="mail" href="mailto:contact@imankia.com">contact@imankia.com</a>
 	</footer>
 </body>

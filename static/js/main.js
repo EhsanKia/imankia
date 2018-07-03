@@ -184,18 +184,18 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 		$scope.contact.submit = "Sending...";
 
 		var postData = {
-			contactName: $scope.contact.name,
-			contactEmail: $scope.contact.email,
-			contactMessage: $scope.contact.message
+			name: $scope.contact.name,
+			email: $scope.contact.email,
+			message: $scope.contact.message,
 		};
 
 		var request = {
-			url: 'scripts/send_email.php',
+			url: '//formspree.io/contact@ehsankia.com',
 			data: postData,
 			method : 'POST'
 		};
 
-		$http(request).success(function(data){
+		$http(request).success((data) => {
 			if (!data.success)
 				$scope.contact.submit = data.error;
 			else{
@@ -205,8 +205,10 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 				$scope.contact.message = "";
 			}
 
-			$timeout(function(){$scope.contact.submit = "Submit Message";}, 5000);
-			$scope.contact.sending = false;
+			$timeout(() => {
+				$scope.contact.sending = false;
+				$scope.contact.submit = "Submit Message";
+			}, 5000);
 		});
 	};
 

@@ -190,7 +190,7 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 		};
 
 		var request = {
-			url: '//formspree.io/contact@ehsankia.com',
+			url: 'https://script.google.com/macros/s/AKfycbz6-egUvKmAC_GNhmXRiJBFWKaoua6h43fbDh0w/exec',
 			data: postData,
 			method : 'POST'
 		};

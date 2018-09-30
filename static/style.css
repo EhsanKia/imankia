@@ -218,6 +218,8 @@ hr{
 	overflow: hidden;
 	height: 250px;
 	transition: height 0.5s;
+	display: flex;
+	align-items: center;
 }
 
 .logo.hidden{

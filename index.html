@@ -102,7 +102,7 @@
 							<span id="post{{p.id}}" ng-bind-html-unsafe='parse(p.body)'></span>
 						</p>
 						<div class="logo" ng-class="{hidden: opened_{{p.id}}}">
-							<a ng-click="toggle({{p.id}})"><img ng-src="/static/img/l/{{p.image}}"></a>
+							<a ng-click="toggle({{p.id}})"><img ng-src="/static/img/m/{{p.image}}"></a>
 						</div>
 						<br>
 						<a class="readmore" ng-show="!opened_{{p.id}}" ng-click="opened_{{p.id}}=1;open({{p.id}})">Read more...</a>

@@ -138,8 +138,8 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 		data = data.replace(/\*\*(.*?)\*\*/g,"<b>$1</b>");
 		data = data.replace(/\*(.*?)\*/g,"<i>$1</i>");
 		data = data.replace(/&&(.*?)&&/g,"<span class='opensans'>$1</span>");
-		data = data.replace(/\[sp=(.*?)\]/g,'<img class="small" src="static/img/s/$1" onclick="expand(this, \'$1\')">');
-		data = data.replace(/\[lp=(.*?)\]/g,'<img src="static/img/m/$1" onclick="expand(this, \'$1\')">');
+		data = data.replace(/\[sp=(.*?)\]/g,'<img class="small" src="/static/img/s/$1" onclick="expand(this, \'$1\')">');
+		data = data.replace(/\[lp=(.*?)\]/g,'<img src="/static/img/m/$1" onclick="expand(this, \'$1\')">');
 		data = data.replace(/\[yt=(.*?)\]/g,'<iframe width="700" height="525" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
 		data = data.replace(/\[vimeo=(.*?)\]/g,'<iframe width="700" height="525" src="//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>');
 		data = data.replace(/\[gfycat=(.*?)\]/g,'<img class="gfyitem" data-id="$1" data-controls="false" data-dot="false"/>');
@@ -259,7 +259,7 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 		ga('send', 'pageview', '/'+newPage);
 	});
 
-	$http.get('static/posts.json').success(function(data){
+	$http.get('/static/posts.json').success(function(data){
 		$scope.posts = $filter('orderBy')(data, function(p){return p.id;}, true);
 		$scope.dataLoaded = true;
 
@@ -276,7 +276,7 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 	});
 
 	$scope.activeArt = -1;
-	$http.get('static/arts.json').success(function(data){
+	$http.get('/static/arts.json').success(function(data){
 		$scope.arts = $filter('orderBy')(data, function(p){return -p.id;}, false);
 		for (var i = $scope.arts.length - 1; i >= 0; i--) {
 			if ($scope.arts[i].id === 12) $scope.arts[i].hidden = true;
@@ -383,7 +383,7 @@ function expand(el, i){
 
 	setTimeout(function(){
 		img2.onload = function(){img2.style.opacity = "1";};
-		img2.src = 'static/img/b/'+i;
+		img2.src = '/static/img/b/'+i;
 	}, 500);
 
 	disable_scroll();

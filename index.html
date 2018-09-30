@@ -2,19 +2,19 @@
 <html lang="en" ng-app="ImanApp">
 <head>
 	<meta charset="UTF-8">
-	<meta name="image" content="static/img/header-logo.png" />
+	<meta name="image" content="/static/img/header-logo.png" />
 	<meta name="description" content="Iman Kia's Portfolio Website">
 	<meta name="keywords" content="Iman Kia,portfolio,art,industrial design,contact,Iman">
 	<meta name="author" content="Iman Kia">
 	<title>Iman Kia :: Home</title>
 
-	<link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.png">
-	<link rel="stylesheet" href="static/style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.png">
+	<link rel="stylesheet" href="/static/style.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.min.js"></script>
-	<script src="static/js/prefixfree.min.js"></script>
-	<script src="static/js/spin.min.js"></script>
+	<script src="/static/js/prefixfree.min.js"></script>
+	<script src="/static/js/spin.min.js"></script>
 	<script type="text/javascript">
 		var cover_images = [
 			"canal.jpg",
@@ -53,9 +53,9 @@
 		ga('create', 'UA-44323325-1', 'imankia.com');
 		ga('send', 'pageview');
 	</script>
-	<script type="text/javascript" src="static/js/gfyCollection.js"></script>
-	<script type="text/javascript" src="static/js/gfyObject.js"></script>
-	<script src="static/js/main.js"></script>
+	<script type="text/javascript" src="/static/js/gfyCollection.js"></script>
+	<script type="text/javascript" src="/static/js/gfyObject.js"></script>
+	<script src="/static/js/main.js"></script>
 </head>
 <body ng-controller="ImanCtrl">
 	<div id="container" ng-show="fontLoaded">
@@ -80,7 +80,7 @@
 		</div>
 
 		<div id="slider" ng-if="currentPage=='home'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
-			<img ng-show="currentCover==$index" ng-repeat="url in FRONT_IMAGES" ng-src="static/img/c/{{url}}" ng-animate="{show: 'img-show', hide: 'img-hide'}">
+			<img ng-show="currentCover==$index" ng-repeat="url in FRONT_IMAGES" ng-src="/static/img/c/{{url}}" ng-animate="{show: 'img-show', hide: 'img-hide'}">
 		</div>
 
 		<div id="blog" ng-if="currentPage=='blog'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
@@ -102,7 +102,7 @@
 							<span id="post{{p.id}}" ng-bind-html-unsafe='parse(p.body)'></span>
 						</p>
 						<div class="logo" ng-class="{hidden: opened_{{p.id}}}">
-							<a ng-click="toggle({{p.id}})"><img ng-src="static/img/l/{{p.image}}"></a>
+							<a ng-click="toggle({{p.id}})"><img ng-src="/static/img/l/{{p.image}}"></a>
 						</div>
 						<br>
 						<a class="readmore" ng-show="!opened_{{p.id}}" ng-click="opened_{{p.id}}=1;open({{p.id}})">Read more...</a>
@@ -122,7 +122,7 @@
 		<div id="portfolio" ng-if="currentPage=='portfolio'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
 			<div style="margin-top: 55px" ng-show="activeArt < 0 || activeArt >= arts.length" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
 				<figure class="art" ng-hide="p.hidden" ng-repeat="p in arts" ng-click="openArt($index)">
-					<img ng-src="static/img/a/{{p.image}}" alt="">
+					<img ng-src="/static/img/a/{{p.image}}" alt="">
 					<figcaption>
 						<h3>{{p.title}}</h3>
 						<span>{{p.summary}}</span>
@@ -141,7 +141,7 @@
 		</div>
 
 		<div id="about" ng-if="currentPage=='about'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
-			<img src="static/img/designing.jpg">
+			<img src="/static/img/designing.jpg">
 			<p style="font-size: 12pt; width: 700px; line-height: 1.75">
 				My name is Iman Kia. I am an Iranian-Quebecer, currently living in Montreal. I am an industrial designer recently graduated from the University of Montreal.
 				<br><br>

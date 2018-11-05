@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="image" content="/static/img/header-logo.png" />
-	<meta name="viewport" content="width=750, initial-scale=1">
+	<meta name="viewport" content="width=750">
 	<meta name="description" content="Iman Kia's Portfolio Website">
 	<meta name="keywords" content="Iman Kia,portfolio,art,industrial design,contact,Iman">
 	<meta name="author" content="Iman Kia">
@@ -12,8 +12,9 @@
 	<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.png">
 	<link rel="stylesheet" href="/static/style.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-sanitize.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-mobile.min.js"></script>
 	<script src="/static/js/prefixfree.min.js"></script>
 	<script src="/static/js/spin.min.js"></script>
 	<script type="text/javascript">
@@ -122,8 +123,7 @@
 
 		<div id="portfolio" ng-if="currentPage=='portfolio'"
 			 ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
-			<div ng-show="activeArt < 0 || activeArt >= arts.length"
-				 ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
+			<div ng-show="activeArt < 0 || activeArt >= arts.length">
 				<figure class="art" ng-hide="p.hidden" ng-repeat="p in arts" ng-click="openArt($index)">
 					<img ng-src="/static/img/a/{{p.image}}" alt="">
 					<figcaption>
@@ -132,8 +132,10 @@
 					</figcaption>
 				</figure>
 			</div>
-			<div id="art-carousel" ng-show="activeArt >= 0 && activeArt < arts.length">
-				<article class="art-post" ng-repeat="p in arts" ng-show="$index == activeArt" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
+			<div id="art-carousel" ng-show="activeArt >= 0 && activeArt < arts.length"
+				 ng-swipe-left="openArt(activeArt+1)" ng-swipe-right="openArt(activeArt-1)">
+				<article class="art-post" ng-repeat="p in arts" ng-show="$index == activeArt"
+				         ng-animate="{show: 'art-show', hide: 'art-hide'}">
 					<a class="title" href="#/portfolio/p{{p.id}}">{{p.title}}</a>
 					<div class="date summary">{{p.summary}}</div>
 					<div class="content" ng-bind-html-unsafe='parse(p.body)'></div>

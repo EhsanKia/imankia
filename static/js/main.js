@@ -1,4 +1,4 @@
-var app = angular.module('ImanApp', []);
+var app = angular.module('ImanApp', ['ngMobile']);
 
 app.filter('page', function(){
 	return function(input, ppp, page) {
@@ -25,7 +25,7 @@ app.directive('postsLoop', function () {
 	};
 });
 
-function ImanCtrl($scope, $http, $location, $filter, $timeout){
+app.controller('ImanCtrl', function($scope, $http, $location, $filter, $timeout){
 	$scope.FRONT_IMAGES = cover_images;
 
 	$scope.MONTH = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -67,7 +67,6 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 	$scope.open = function(n){
 		var el = document.getElementById('post'+n);
 		el.parentNode.style.maxHeight = el.offsetHeight + "px";
-		stButtons.locateElements();
 	};
 
 	$scope.close = function(n){
@@ -293,7 +292,7 @@ function ImanCtrl($scope, $http, $location, $filter, $timeout){
 			$location.path('/portfolio');
 		}
 	};
-}
+});
 
 var spinner_opts = {
   lines: 9, // The number of lines to draw

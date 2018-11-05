@@ -483,7 +483,7 @@ footer{
 
 .img-show { position: absolute; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
 .img-show-active { opacity: 1; }
-.img-hide { position: absolute; opacity: 1; transition: opacity  ease-out 0.5s; }
+.img-hide { position: absolute; opacity: 1; transition: opacity ease-out 0.5s; }
 .img-hide-active { opacity: 0; }
 
 .popup-img{

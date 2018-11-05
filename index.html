@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="image" content="/static/img/header-logo.png" />
+	<meta name="viewport" content="width=750, initial-scale=1">
 	<meta name="description" content="Iman Kia's Portfolio Website">
 	<meta name="keywords" content="Iman Kia,portfolio,art,industrial design,contact,Iman">
 	<meta name="author" content="Iman Kia">
@@ -119,8 +120,10 @@
 			</div>
 		</div>
 
-		<div id="portfolio" ng-if="currentPage=='portfolio'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
-			<div style="margin-top: 55px" ng-show="activeArt < 0 || activeArt >= arts.length" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
+		<div id="portfolio" ng-if="currentPage=='portfolio'"
+			 ng-animate="{enter: 'portfolio-show', leave: 'portfolio-hide'}">
+			<div style="margin-top: 55px" ng-show="activeArt < 0 || activeArt >= arts.length"
+				ng-animate="{show: 'portfolio-show', hide: 'portfolio-hide'}">
 				<figure class="art" ng-hide="p.hidden" ng-repeat="p in arts" ng-click="openArt($index)">
 					<img ng-src="/static/img/a/{{p.image}}" alt="">
 					<figcaption>
@@ -130,7 +133,7 @@
 				</figure>
 			</div>
 			<div id="art-carousel" ng-show="activeArt >= 0 && activeArt < arts.length">
-				<article class="art-post" ng-repeat="p in arts" ng-show="$index == activeArt" ng-animate="{show: 'art-show', hide: 'art-hide'}">
+				<article class="art-post" ng-repeat="p in arts" ng-show="$index == activeArt" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
 					<a class="title" href="#/portfolio/p{{p.id}}">{{p.title}}</a>
 					<div class="date summary">{{p.summary}}</div>
 					<div class="content" ng-bind-html-unsafe='parse(p.body)'></div>
@@ -154,7 +157,7 @@
 		</div>
 
 		<div id="contact" ng-if="currentPage=='contact'" ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
-			<div style="width: 550px; margin: auto;">
+			<div style="width: 700px; margin: auto;">
 				<br><br>
 				<p style="font-size: 12pt">
 					I'd be glad to read about your suggestions, requests or any thoughts you want to share.

@@ -38,7 +38,7 @@ a {
 	border-bottom: 2px solid rgba(255,255,255,0);
 	text-transform: uppercase;
 	font-weight: 400;
-	font-size: 11pt;
+	font-size: 12pt;
 	transition: border-color 0.2s;
 }
 
@@ -279,13 +279,15 @@ hr{
 }
 
 #portfolio {
-	width: 1128px;
+	max-width: 1128px;
+	text-align: center;
 	margin: auto;
 }
 
 #art-carousel {
 	width: 700px;
 	margin: auto;
+	text-align: left;
 }
 
 .art {
@@ -371,7 +373,7 @@ hr{
 }
 
 header{
-	padding-top: 10px;
+	padding-top: 20px;
 	padding-bottom: 42px;
 	text-align: center;
 }
@@ -464,19 +466,24 @@ footer{
 }
 
 
-.fade-show { position: absolute; width: 1280px; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
+.fade-show { position: absolute; left: 50%; margin-left: -350px; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
 .fade-show-active { opacity: 1; }
-.fade-hide { position: absolute; width: 1280px; opacity: 1; transition: opacity  ease-out 0.5s; }
+.fade-hide { position: absolute; left: 50%; margin-left: -350px; opacity: 1; transition: opacity  ease-out 0.5s; }
 .fade-hide-active { opacity: 0; }
+
+.portfolio-show { position: absolute; width: 100%; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
+.portfolio-show-active { opacity: 1; }
+.portfolio-hide { position: absolute; width: 100%; opacity: 1; transition: opacity  ease-out 0.5s; }
+.portfolio-hide-active { opacity: 0; }
 
 .art-show { position: absolute; opacity: 0; transition: opacity ease-out 0.5s 0.5s}
 .art-show-active { opacity: 1;}
 .art-hide { position: absolute; opacity: 1; transition: opacity ease-out 0.5s; }
 .art-hide-active { opacity: 0;}
 
-.img-show { position: absolute; width: 1280px; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
+.img-show { position: absolute; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
 .img-show-active { opacity: 1; }
-.img-hide { position: absolute; width: 1280px; opacity: 1; transition: opacity  ease-out 0.5s; }
+.img-hide { position: absolute; opacity: 1; transition: opacity  ease-out 0.5s; }
 .img-hide-active { opacity: 0; }
 
 .popup-img{

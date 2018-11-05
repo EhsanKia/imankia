@@ -121,9 +121,9 @@
 		</div>
 
 		<div id="portfolio" ng-if="currentPage=='portfolio'"
-			 ng-animate="{enter: 'portfolio-show', leave: 'portfolio-hide'}">
-			<div style="margin-top: 55px" ng-show="activeArt < 0 || activeArt >= arts.length"
-				ng-animate="{show: 'portfolio-show', hide: 'portfolio-hide'}">
+			 ng-animate="{enter: 'fade-show', leave: 'fade-hide'}">
+			<div ng-show="activeArt < 0 || activeArt >= arts.length"
+				 ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
 				<figure class="art" ng-hide="p.hidden" ng-repeat="p in arts" ng-click="openArt($index)">
 					<img ng-src="/static/img/a/{{p.image}}" alt="">
 					<figcaption>

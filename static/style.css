@@ -466,15 +466,15 @@ footer{
 }
 
 
-.fade-show { position: absolute; left: 50%; margin-left: -350px; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
+.fade-show { position: absolute; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
 .fade-show-active { opacity: 1; }
-.fade-hide { position: absolute; left: 50%; margin-left: -350px; opacity: 1; transition: opacity  ease-out 0.5s; }
+.fade-hide { position: absolute; left: 50%; transform: translateX(-50%); opacity: 1; transition: opacity  ease-out 0.5s; }
 .fade-hide-active { opacity: 0; }
 
-.portfolio-show { position: absolute; width: 100%; opacity: 0; transition: opacity ease-out 0.5s 0.2s; }
-.portfolio-show-active { opacity: 1; }
-.portfolio-hide { position: absolute; width: 100%; opacity: 1; transition: opacity  ease-out 0.5s; }
-.portfolio-hide-active { opacity: 0; }
+#portfolio.fade-show,
+#portfolio.fade-hide {
+	width: 100%;
+}
 
 .art-show { position: absolute; opacity: 0; transition: opacity ease-out 0.5s 0.5s}
 .art-show-active { opacity: 1;}

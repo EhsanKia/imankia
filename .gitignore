@@ -2,6 +2,6 @@ admin/
 arts/
 posts/
 scripts/
-Admin Panel.url
+*.url
 admin.py
 merge.py

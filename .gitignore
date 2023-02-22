@@ -5,3 +5,5 @@ scripts/
 *.url
 admin.py
 merge.py
+*.txt
+*.lnk

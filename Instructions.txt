@@ -24,7 +24,7 @@ C:\Users\imank\Documents\Website\Imankia Website\imankia.com
 
 6. Open Merge.py
 
-7.
+7. Open GitHub app. Commit and add comment. Push Origin to finish update.
 
 8. Modify code by opening Styles.css with VSC
 

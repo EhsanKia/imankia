@@ -1,0 +1,32 @@
+imankia.com
+
+1. Go to Folder
+C:\Users\imank\Documents\Website\Imankia Website\imankia.com
+
+2. Open admin.py
+
+3. Open Admin Panel (shortcut)
+
+4. Modify content
+
+[text](url)
+**bold**
+*italic*
+**&&title&&**
+[lp=image_name]
+[sp=image_name]
+{center stuff}
+[yt=id]
+[vimeo=id]
+[gfycat=id]
+
+5. Preview changes in http://127.0.0.1:8000/#/home
+
+6. Open Merge.py
+
+7.
+
+8. Modify code by opening Styles.css with VSC
+
+
+

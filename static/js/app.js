@@ -380,7 +380,7 @@ function renderProjectDetails() {
     AppMount.innerHTML = `
         <div class="section-container">
             <div class="project-detail-header">
-                <a href="#/home#portfolio-section" class="nav-btn" style="margin-bottom: 25px;">
+                <a href="#portfolio" class="nav-btn" style="margin-bottom: 25px;">
                     &larr; ${t.back_to_grid}
                 </a>
                 <h1 class="project-detail-title">${p.title}</h1>
@@ -444,27 +444,11 @@ function loadProjects() {
 
 // 6. SPA Routing Handler
 function handleRoute() {
-    const path = window.location.hash || '#/home';
-    const parts = path.split('/');
-    const mainPage = parts[1] || 'home';
+    const path = window.location.hash || '#portfolio';
     
-    // Redirect direct routes to home sections (for backward compatibility)
-    if (mainPage === 'portfolio' && !parts[2]) {
-        window.location.hash = '#/home#portfolio-section';
-        return;
-    }
-    if (mainPage === 'about') {
-        window.location.hash = '#/home#about-section';
-        return;
-    }
-    if (mainPage === 'contact') {
-        window.location.hash = '#/home#contact-section';
-        return;
-    }
-    
-    // Check if it is a project detail sub-route
-    if (mainPage === 'portfolio' && parts[2]) {
-        const slug = parts[2];
+    // Check if it is a project detail sub-route (e.g. #/portfolio/slug)
+    if (path.startsWith('#/portfolio/') && path.split('/')[2]) {
+        const slug = path.split('/')[2];
         const match = state.projects.find(p => cleanTitle(p.title) === slug);
         if (match) {
             state.currentPage = 'portfolio-detail';
@@ -472,33 +456,31 @@ function handleRoute() {
             renderPage();
             return;
         } else {
-            window.location.hash = '#/home#portfolio-section';
+            window.location.hash = '#portfolio';
             return;
         }
     }
     
     // Otherwise render the unified Landing page (slider + sections)
-    state.currentPage = 'home';
-    state.activeProject = null;
-    renderPage();
+    // If we were on detail page or the landing page is not rendered yet
+    if (state.currentPage !== 'home' || !document.getElementById('portfolio-section')) {
+        state.currentPage = 'home';
+        state.activeProject = null;
+        renderPage();
+    }
     
-    // Scroll spy or direct jump to hash section if present in the URL
-    // e.g. path is '#/home#about-section'
-    const hashIdx = path.indexOf('#', 2);
-    if (hashIdx !== -1) {
-        const sectionId = path.substring(hashIdx + 1);
-        setTimeout(() => {
-            const target = document.getElementById(sectionId);
-            if (target) {
-                scrollToSection(target);
-                const activeNavName = sectionId.replace('-section', '');
-                setActiveNavLink(activeNavName);
-            }
-        }, 100);
-    } else {
-        // Scroll back to top if direct hit to home
+    // Determine section target from hash
+    if (path === '#' || path === '' || path === '#home') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setActiveNavLink('portfolio'); // default active link
+        setActiveNavLink('portfolio');
+    } else {
+        // Handle normal hash like #portfolio, #about, #contact
+        const cleanHash = path.replace('#', '');
+        const target = document.getElementById(`${cleanHash}-section`);
+        if (target) {
+            scrollToSection(target);
+            setActiveNavLink(cleanHash);
+        }
     }
     
     // Localize Nav strings
@@ -562,15 +544,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = document.getElementById(sectionId);
                 if (target) {
                     scrollToSection(target);
-                    history.pushState(null, null, `#/home#${sectionId}`);
+                    if (window.location.hash !== `#${name}`) {
+                        window.location.hash = `#${name}`;
+                    }
                     setActiveNavLink(name);
                 }
             } else {
-                // If on details page, let URL trigger routing back to landing page section
-                window.location.hash = `#/home#${sectionId}`;
+                // If on details page, update hash to trigger routing back
+                window.location.hash = `#${name}`;
             }
         });
     });
+
+    // Logo Click scroll to top interceptor
+    const logoLink = document.getElementById('logo-link');
+    if (logoLink) {
+        logoLink.addEventListener('click', (e) => {
+            if (state.currentPage === 'home') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (window.location.hash !== '' && window.location.hash !== '#portfolio') {
+                    window.location.hash = '#portfolio';
+                }
+                setActiveNavLink('portfolio');
+            } else {
+                window.location.hash = '#portfolio';
+            }
+        });
+    }
     
     // Language Toggle button click listener
     const langBtn = document.getElementById('lang-toggle');

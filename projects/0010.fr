@@ -1,8 +1,8 @@
 {
   "id": 10,
   "image": "Bonsai Cover.jpg",
-  "order": 20,
-  "title": "",
-  "summary": "",
-  "body": ""
+  "order": 10,
+  "title": "Tisch der Geduld",
+  "summary": "Développement d'un concept autour du thème Tempus fugit (le temps file)",
+  "body": "Avec du temps et des soins, un bonsaï peut vivre plus de cent ans. Le bonsaï grandit lentement pour atteindre sa forme parfaite et procure à son soignant un sentiment d'accomplissement et de fierté. Il enseigne la discipline et la concentration.\n\nLe bonsaï représente l'équilibre, la méditation et l'harmonie, ce qui en fait un symbole parfait pour apprécier le passage du temps. Cependant, le bonsaï demande beaucoup de temps et de patience, ce qui peut être intimidant pour les débutants.\n\n\n[lp=Tisch Cover 2.jpg]\n\n\n*Tisch der Geduld (table de patience)* est un kit pour débutant qui simplifie l'entretien du bonsaï, le rendant accessible à tous. L'arrosage quotidien de la plante peut se faire sur la table elle-même et le plateau tournant facilite la taille de l'arbre. La table elle-même sert de piédestal pour l'arbre miniature.\n\n*Créé à Halle, Allemagne*\n*2014*\n\n\n\n\n\n\n**&&Concept&&**\n\n[lp=Workstation.jpg]\n\n\nEn analysant l'espace de travail d'un professionnel du bonsaï, on peut identifier les composants nécessaires à son entretien : une table basse, un plateau tournant, une boîte à outils et du matériel d'arrosage.\n\n\n\n\n\n\n\n\n**&&Croquis et modèle&&**\n\n[lp=Sketche Bonsai.jpg]\n\n[lp=Exploded.jpg]\n\n[lp=Tisch render.jpg]\n\n\n\n\n\n\n\n\n**&&Prototype&&**\n\n[lp=Process.jpg]\n\n\n\n\n\n\n\n\n**&&Produit final&&**\n\n<iframe src=\"https://player.vimeo.com/video/127985544?color=ffffff&title=0&byline=0&portrait=0\" width=\"700\" height=\"395\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>\n\n[lp=Tisch complete.jpg]\n\n[lp=Watering Bonsai.jpg]\n\n[lp=trimming.jpg]"
 }

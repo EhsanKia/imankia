@@ -2,7 +2,7 @@
   "id": 7,
   "image": "Tramway Cover.jpg",
   "order": 7,
-  "title": "",
-  "summary": "",
-  "body": ""
+  "title": "The Grid, Tramway",
+  "summary": "Conception et modélisation 3D",
+  "body": "Design d'un tramway et modélisation 3D avec Rhinoceros et Cinema4D.\n\n*2012*\n\n\n\n[lp=Tramway Poster.jpg]\n\n\n[lp=Side Views.jpg]\n\n\n**&&Croquis et processus&&**\n\n[lp=Tramway Sketches.jpg]\n\n\n&&Concept choisi&&\n[lp=Tramway Sketch.jpg]\n\n\n{**&&Modélisation 3D&&**}\n[lp=Tram Monitor.jpg]\n\n\n\n\n**&&Bleu électrique&&**\n\n[lp=Tramway Light.jpg]\n\n\n[lp=Tramway Above.jpg]\n\n\n[lp=Tramway Dark.jpg]"
 }

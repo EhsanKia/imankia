@@ -1,0 +1,8 @@
+{
+  "id": 19,
+  "image": "Ringo-Studio-Modern-Age-Studio-NYC Cover.jpg",
+  "order": 19,
+  "title": "Evo",
+  "summary": "Luminaire en ligne continue",
+  "body": "Luminaire suspendu à DEL en forme de bâton lumineux modulaire, composé de polymère dépoli usiné et de raccords en aluminium. Ce système simple permet d'ajouter des modules selon les besoins pour former une ligne lumineuse homogène et continue. Simplement alimenté par un câble de suspension pour un look épuré.\n\n*2019*\n\n\n\n[lp=Ringo-Studio-Modern-Age-Studio-NYC (1).jpg]\n*Modern Age NY*\n\n\n\n\n**&&Composants&&**\n[lp=Frici Evo Parts.jpg]\nLe luminaire s'assemble facilement pour former une ligne de lumière continue. Les sections sont reliées bout à bout et maintenues en place avec seulement deux vis sur le dessus, et le courant circule à travers elles à l'aide de connecteurs compacts à ressort.\n\n\n[lp=P93M-ASSEMBLY.jpg]\n\n\n\n\n\n\n\n**&&Développement&&**\n\n\n[lp=EVO Sketch.jpg]\n[lp=PXL_20220207_145816156.jpg]\n\n\n\n\n**&&Produit final&&**\n\n\n[lp=P93M EVO SCENE 2.jpg]\n\n\n[lp=Government of Canada Office Site 1.jpg]\n*Bureaux du gouvernement du Canada*\n\n[lp=Government of Canada Office Site 2.jpg]\n*Bureaux du gouvernement du Canada*\n\n[lp=P93M Frici Evo Cover.jpg]\n\nEn plus de ces photos, ce produit a été utilisé comme éclairage décoratif dans les bureaux de Google, Microsoft et d'autres grands projets."
+}

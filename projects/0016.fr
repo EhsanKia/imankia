@@ -1,0 +1,8 @@
+{
+  "id": 16,
+  "image": "Booth (3).jpg",
+  "order": 16,
+  "title": "Kiosque d'exposition",
+  "summary": "Salon du luminaire",
+  "body": "Ce kiosque a été développé pour un salon du luminaire à New York. Il utilise la transparence et les découpes pour piquer la curiosité sur ce qui se trouve à l'intérieur. Les luminaires traversent la structure et sont autorisés à dépasser ses limites. Le kiosque sert également de caisse de transport.\n\n*2022*\n\n[lp=Booth (3).jpg]\n\n\n**&&Expédition et installation&&**\n\nLe kiosque est livré fermé avec des panneaux de particules vissés pour le protéger. Lors de l'installation, la structure se sépare en deux en diagonale et des poutres sont vissées sur le dessus pour former une pergola.\n\n[lp=Booth (4).jpg]\n\n**&&Détails&&**\n\n[lp=Booth (2).jpg]\n[lp=Booth (1).jpg]\n[lp=Booth (5).jpg]"
+}

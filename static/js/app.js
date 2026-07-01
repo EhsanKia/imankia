@@ -50,22 +50,12 @@ const UI_STRINGS = {
     }
 };
 
-const COVER_IMAGES = [
-    "canal.jpg",
-    "Bi Cover.jpg",
-    "Tisch Cover.jpg",
-    "Tramway Cover.jpg",
-    "Maestro Cover.jpg",
-    "Panache Cover.jpg",
-    "Samand K14.jpg",
-    "Weber Cover.jpg"
-];
-
 // 2. State Management
 const state = {
     lang: localStorage.getItem('imankia_lang') || 'en',
     currentPage: 'home', // 'home' (sections page) or 'portfolio-detail'
     projects: [],
+    covers: [], // Dynamically loaded home slider covers
     activeProject: null,
     sliderIndex: 0,
     sliderInterval: null,
@@ -136,7 +126,7 @@ function renderLandingPage() {
     // 1. Image Slider HTML
     let dotsHtml = '';
     let slidesHtml = '';
-    COVER_IMAGES.forEach((img, idx) => {
+    state.covers.forEach((img, idx) => {
         const activeClass = idx === 0 ? 'active' : '';
         slidesHtml += `
             <div class="slide ${activeClass}" data-index="${idx}">
@@ -417,7 +407,8 @@ function renderProjectDetails() {
 
 // 5. Data Loading Action
 function loadProjects() {
-    const url = `/static/arts_${state.lang}.json`;
+    const artsUrl = `/static/arts_${state.lang}.json`;
+    const coversUrl = `/static/covers.json`;
     
     AppMount.innerHTML = `
         <div class="loader-container">
@@ -425,24 +416,30 @@ function loadProjects() {
         </div>
     `;
     
-    fetch(url)
-        .then(res => {
+    Promise.all([
+        fetch(artsUrl).then(res => {
             if (!res.ok) throw new Error("Failed to load projects JSON");
             return res.json();
+        }),
+        fetch(coversUrl).then(res => {
+            if (!res.ok) throw new Error("Failed to load covers JSON");
+            return res.json();
         })
-        .then(data => {
-            state.projects = data;
-            handleRoute();
-        })
-        .catch(err => {
-            console.error(err);
-            AppMount.innerHTML = `
-                <div class="section-container" style="text-align: center; padding: 100px 0;">
-                    <h2>Error loading portfolio data</h2>
-                    <p style="color: var(--text-muted); margin-top: 15px;">Please check server connectivity.</p>
-                </div>
-            `;
-        });
+    ])
+    .then(([projectsData, coversData]) => {
+        state.projects = projectsData;
+        state.covers = coversData;
+        handleRoute();
+    })
+    .catch(err => {
+        console.error(err);
+        AppMount.innerHTML = `
+            <div class="section-container" style="text-align: center; padding: 100px 0;">
+                <h2>Error loading portfolio data</h2>
+                <p style="color: var(--text-muted); margin-top: 15px;">Please check server connectivity.</p>
+            </div>
+        `;
+    });
 }
 
 // 6. SPA Routing Handler

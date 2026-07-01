@@ -1,8 +1,0 @@
-{
-  "id": 4,
-  "image": "Bi Cover.jpg",
-  "order": 4,
-  "title": "Bi, le vélo urbain",
-  "summary": "Conception, illustration et modélisation 3D",
-  "body": "Conception d'un vélo électrique pliable qui se range facilement dans un coffre et est facile à recharger. Ce vélo est conçu pour les courts trajets en ville, éliminant le besoin de prendre la voiture dans les zones urbaines.\n\n*2013*\n\n\n\n[lp=Bi Poster.jpg]\n\n\n[lp=Bi Closed.jpg]\n\n[lp=Bi Pliage.jpg]\n\n\nL'ingénieux mécanisme de pliage offre une transition rapide et élégante vers une forme très compacte. Le pliage s'effectue sur deux axes différents. La roue arrière pivote vers le haut et la roue avant pivote latéralement pour s'insérer au centre du cadre.\n\n\n\n**&&Quelques croquis&&**\n\n[lp=Bi Sketch.jpg]\n\n\n[lp=Bi Illustration.jpg]\n\n\n\n**&&Caractéristiques&&**\n\n[lp=3 Technologies.jpg]\n\n\n[lp=Bi Back.jpg]\n\n\n[lp=Bi My Man.jpg]"
-}

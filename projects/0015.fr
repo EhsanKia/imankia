@@ -1,8 +1,0 @@
-{
-  "id": 15,
-  "image": "Mushroom Cover.jpg",
-  "order": 15,
-  "title": "Projecteur d'étoiles",
-  "summary": "Veilleuse champignon",
-  "body": "Veilleuse projecteur pour bébés avec un spectacle de ciel étoilé et de la musique, parfait pour apaiser les bébés et les aider à s'endormir. Disponible avec une variété de chansons et différentes intensités de lumière.\n\n\n*2018*\n*sources : pabobo.com*\n[vimeo=541077869]\n\n\n**&&Concept&&**\n\n[lp=Mushroom Concept (1).jpg]\n[sp=Mushroom Concept (3).jpg][sp=Mushroom Concept (2).jpg]\n\n\n**&&Prototype&&**\n\n[lp=Mushroom Proto (1).jpg]\n\n**&&Produit final&&**\n\n[lp=Mushroom Stars (5).jpg]"
-}

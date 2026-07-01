@@ -1,8 +1,0 @@
-{
-  "id": 17,
-  "image": "DRUM SURFACE COVER.jpg",
-  "order": 17,
-  "title": "Drum",
-  "summary": "Luminaire de grande surface",
-  "body": "Audacieux, moderne et fonctionnel, Drum est un luminaire suspendu et de surface qui fournit une diffusion généreuse et large d'éclairage général. Le déflecteur conique décalé ajoute une touche unique à ce luminaire cylindrique. Disponible dans des combinaisons de trois diamètres et trois hauteurs, ce luminaire offre une grande variété de configurations de tailles et de couleurs.\n\n*2020*\n[lp=DRUM SURFACE - C82 Trio Colors.jpg]\n\n**&&Processus&&**\n\n[sp=Drum Process (1).jpg][sp=Drum Process (4).jpg][sp=Drum Process (2).jpg]\n\n**&&Produit final&&**\n\n[lp=Government of Canada Office (1).jpg]\n[lp=P82-scene.jpg]"
-}

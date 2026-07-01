@@ -1,8 +1,0 @@
-{
-  "id": 18,
-  "image": "Y1234 - P982 Cover.jpg",
-  "order": 18,
-  "title": "Y1234",
-  "summary": "Luminaire profilé modulaire",
-  "body": "Un profilé en aluminium fuselé minimaliste qui offre une large diffusion de lumière. Ce module polyvalent peut être assemblé dans différentes configurations pour former un éclairage direct, indirect ou une matrice de lumière.\n\n*2020*\n\n[lp=Y2-Production.jpg]\n\n{[sp=Y1234 - P981.jpg]     [sp=Y1234 - P982.jpg]}\n{[sp=Y1234 - P983.jpg][sp=Y1234 - P984.jpg]}\n[lp=Y1234 - P984 Main.jpg]\n\n\n**&&Croquis et prototypes&&**\n\n\n[lp=Y1234 Sketch.jpg]\n\n[lp=Y1234-Prototype.jpg]\n\n\n**&&Variante verticale&&**\n\n\n[lp=P994-SCENE.jpg]\n\n\n**&&Variante en feutre acoustique&&**\n\n\n[lp=P980-Scene.jpg]\n[sp=P980 - Aster(PETAL).jpg][sp=P980 - Aster(OVAL).jpg][sp=P980 - Aster(TRAPEZE).jpg]\n\nPour économiser de l'espace, les panneaux acoustiques sont expédiés à plat. Le capuchon supérieur magnétique se retire facilement pour révéler des encoches dans lesquelles les panneaux sont insérés et fixés avec des vis. Replacez le capuchon.\n\n[lp=P980-INSTALLATION SITE.jpg]\n\n{[sp=Aster CAP ON.jpg][sp=Aster CAP OFF.jpg]}"
-}

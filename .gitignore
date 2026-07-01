@@ -1,1 +1,16 @@
+# Ignore local admin workspace (local editor panel only)
 admin/
+
+# Ignore raw project translations database (local authoring files only)
+projects/
+
+# Ignore local Python server and compiler script
+server.py
+
+# Ignore Python execution cache
+__pycache__/
+*.pyc
+
+# Ignore OS metadata files
+.DS_Store
+Thumbs.db

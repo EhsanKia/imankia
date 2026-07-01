@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Modern Portfolio Frontend SPA Application - app.js
-   ========================================================================== */
+const FORMSPREE_ID = "xrewyodq";
 
 // 1. Localized UI Strings (English and French)
 const UI_STRINGS = {
@@ -66,11 +64,12 @@ const COVER_IMAGES = [
 // 2. State Management
 const state = {
     lang: localStorage.getItem('imankia_lang') || 'en',
-    currentPage: 'home',
+    currentPage: 'home', // 'home' (sections page) or 'portfolio-detail'
     projects: [],
     activeProject: null,
     sliderIndex: 0,
-    sliderInterval: null
+    sliderInterval: null,
+    observer: null
 };
 
 // 3. Helper Functions
@@ -79,42 +78,29 @@ function cleanTitle(text) {
     return text.replace(/ /g, '_').replace(/[^\w]/g, '');
 }
 
-// Custom parser for Iman Kia's writer commands
 function parseWriterCommands(data) {
     if (!data) return "";
     let html = data;
-    
-    // Replace newlines with <br>
     html = html.replace(/\n/g, '<br>');
-    
-    // Bold: **text**
     html = html.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
-    
-    // Italic: *text*
     html = html.replace(/\*(.*?)\*/g, "<i>$1</i>");
-    
-    // Title/Header tags: &&Title&& or **&&Title&&**
     html = html.replace(/&&\s*(.*?)\s*&&/g, '<h3 class="content-section-title">$1</h3>');
-    
-    // Small Image tag: [sp=filename.jpg]
     html = html.replace(/\[sp=(.*?)\]/g, '<img class="small" src="/static/img/s/$1" onclick="window.zoomImage(\'/static/img/b/$1\')">');
-    
-    // Large Image tag: [lp=filename.jpg]
     html = html.replace(/\[lp=(.*?)\]/g, '<img src="/static/img/m/$1" onclick="window.zoomImage(\'/static/img/b/$1\')">');
-    
-    // YouTube video: [yt=video_id]
     html = html.replace(/\[yt=(.*?)\]/g, '<div class="video-container"><iframe width="700" height="394" src="https://www.youtube.com/embed/$1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>');
-    
-    // Vimeo video: [vimeo=video_id]
     html = html.replace(/\[vimeo=(.*?)\]/g, '<div class="video-container"><iframe width="700" height="394" src="https://player.vimeo.com/video/$1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>');
-    
-    // Link parsing: [label](url)
     html = html.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
-    
-    // Centering wrapper: {centered text}
     html = html.replace(/\{(.*?)\}/g, "<div style='text-align:center'>$1</div>");
-    
     return html;
+}
+
+// Custom smooth scrolling helper that respects the fixed header height
+function scrollToSection(target) {
+    if (!target) return;
+    const navbar = document.getElementById('navbar');
+    const yOffset = navbar ? -navbar.offsetHeight : -80;
+    const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
 }
 
 // 4. Page Rendering Components
@@ -127,46 +113,29 @@ function renderPage() {
         state.sliderInterval = null;
     }
     
-    // Update navbar active link
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    
-    const activeNavItem = document.getElementById(`nav-${state.currentPage}`);
-    if (activeNavItem) {
-        activeNavItem.classList.add('active');
-    }
-    
     // Route renderer selector
-    switch (state.currentPage) {
-        case 'home':
-            renderHome();
-            break;
-        case 'portfolio':
-            if (state.activeProject) {
-                renderProjectDetails();
-            } else {
-                renderPortfolioGrid();
-            }
-            break;
-        case 'about':
-            renderAbout();
-            break;
-        case 'contact':
-            renderContact();
-            break;
-        default:
-            renderHome();
+    if (state.currentPage === 'portfolio-detail') {
+        renderProjectDetails();
+    } else {
+        renderLandingPage();
     }
     
     // Update document title
-    const t = UI_STRINGS[state.lang][state.currentPage] || "Portfolio";
-    document.title = `Iman Kia :: ${t.charAt(0).toUpperCase() + t.slice(1)}`;
+    const t = UI_STRINGS[state.lang];
+    let pageTitle = "Portfolio";
+    if (state.currentPage === 'portfolio-detail' && state.activeProject) {
+        pageTitle = state.activeProject.title;
+    }
+    document.title = `Iman Kia :: ${pageTitle}`;
 }
 
-// Renders the Homepage Cover Slider
-function renderHome() {
+// Renders the combined Single-Page Landing Page
+function renderLandingPage() {
+    const t = UI_STRINGS[state.lang];
+    
+    // 1. Image Slider HTML
     let dotsHtml = '';
     let slidesHtml = '';
-    
     COVER_IMAGES.forEach((img, idx) => {
         const activeClass = idx === 0 ? 'active' : '';
         slidesHtml += `
@@ -179,53 +148,10 @@ function renderHome() {
         `;
     });
     
-    AppMount.innerHTML = `
-        <div class="slider-container">
-            ${slidesHtml}
-            <div class="slider-dots">
-                ${dotsHtml}
-            </div>
-        </div>
-    `;
-    
-    // Setup slider click/auto transitions
-    state.sliderIndex = 0;
-    const slides = AppMount.querySelectorAll('.slide');
-    const dots = AppMount.querySelectorAll('.dot');
-    
-    function showSlide(index) {
-        slides.forEach(s => s.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('active'));
-        
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-        state.sliderIndex = index;
-    }
-    
-    // Dot click listeners
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            const idx = parseInt(dot.getAttribute('data-index'));
-            showSlide(idx);
-        });
-    });
-    
-    // Auto rotation every 5 seconds
-    state.sliderInterval = setInterval(() => {
-        const nextIdx = (state.sliderIndex + 1) % COVER_IMAGES.length;
-        showSlide(nextIdx);
-    }, 5000);
-}
-
-// Renders the Grid of projects
-function renderPortfolioGrid() {
-    const t = UI_STRINGS[state.lang];
+    // 2. Portfolio Grid HTML
     let cardsHtml = '';
-    
     state.projects.forEach(p => {
-        // Skip projects explicitly flagged as hidden
         if (p.hidden) return;
-        
         cardsHtml += `
             <div class="project-card" data-slug="${cleanTitle(p.title)}">
                 <img src="/static/img/a/${p.image}" alt="${p.title}" class="project-card-img" loading="lazy">
@@ -237,83 +163,26 @@ function renderPortfolioGrid() {
         `;
     });
     
+    // 3. Combine Slider, Portfolio, About, and Contact
     AppMount.innerHTML = `
-        <div class="section-container">
+        <!-- Home Cover Slider Section -->
+        <div class="slider-container">
+            ${slidesHtml}
+            <div class="slider-dots">
+                ${dotsHtml}
+            </div>
+        </div>
+        
+        <!-- Portfolio Section -->
+        <section id="portfolio-section" class="section-container">
             <h2 class="page-title">${t.projects}</h2>
             <div class="portfolio-grid">
                 ${cardsHtml}
             </div>
-        </div>
-    `;
-    
-    // Card Click Router Links
-    AppMount.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const slug = card.getAttribute('data-slug');
-            window.location.hash = `#/portfolio/${slug}`;
-        });
-    });
-}
-
-// Renders a Single Project detail view
-function renderProjectDetails() {
-    const p = state.activeProject;
-    const t = UI_STRINGS[state.lang];
-    
-    // Get current index in projects array to implement Prev/Next links
-    const curIdx = state.projects.findIndex(proj => proj.id === p.id);
-    
-    // Find previous and next project indices (wrapping around)
-    const prevProj = state.projects[(curIdx - 1 + state.projects.length) % state.projects.length];
-    const nextProj = state.projects[(curIdx + 1) % state.projects.length];
-    
-    // Optional metadata line
-    let metaHtml = '';
-    if (p.year || p.location) {
-        metaHtml += `<div class="project-meta">`;
-        if (p.year) metaHtml += `<span><b>${t.years_label}:</b> ${p.year}</span>`;
-        if (p.location) metaHtml += `<span><b>${t.location_label}:</b> ${p.location}</span>`;
-        metaHtml += `</div>`;
-    } else {
-        // Look in summary for location/year or show nothing
-        metaHtml += `<div class="project-meta"><span>${p.summary}</span></div>`;
-    }
-    
-    AppMount.innerHTML = `
-        <div class="section-container">
-            <div class="project-detail-header">
-                <a href="#/portfolio" class="nav-btn" style="margin-bottom: 25px;">
-                    &larr; ${t.back_to_grid}
-                </a>
-                <h1 class="project-detail-title">${p.title}</h1>
-                ${metaHtml}
-            </div>
-            
-            <article class="project-detail-content">
-                ${parseWriterCommands(p.body)}
-            </article>
-            
-            <div class="project-navigation">
-                <a href="#/portfolio/${cleanTitle(prevProj.title)}" class="nav-btn">
-                    &larr; ${t.prev}: ${prevProj.title}
-                </a>
-                <a href="#/portfolio/${cleanTitle(nextProj.title)}" class="nav-btn">
-                    ${t.next}: ${nextProj.title} &rarr;
-                </a>
-            </div>
-        </div>
-    `;
-    
-    // Scroll window to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Renders the About Page
-function renderAbout() {
-    const t = UI_STRINGS[state.lang];
-    
-    AppMount.innerHTML = `
-        <div class="section-container">
+        </section>
+        
+        <!-- About Section -->
+        <section id="about-section" class="section-container" style="border-top: 1px solid rgba(255,255,255,0.05);">
             <h2 class="page-title">${t.about}</h2>
             <div class="about-layout">
                 <div class="about-img-container">
@@ -325,16 +194,10 @@ function renderAbout() {
                     <p>${t.about_p3}</p>
                 </div>
             </div>
-        </div>
-    `;
-}
-
-// Renders the Contact Page (Contour inputs, all-caps styling)
-function renderContact() {
-    const t = UI_STRINGS[state.lang];
-    
-    AppMount.innerHTML = `
-        <div class="section-container">
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact-section" class="section-container" style="border-top: 1px solid rgba(255,255,255,0.05);">
             <h2 class="page-title">${t.contact}</h2>
             <div class="contact-layout">
                 <div class="contact-info">
@@ -367,12 +230,64 @@ function renderContact() {
                     <button type="submit" id="form-submit" class="submit-btn">${t.submit}</button>
                 </form>
             </div>
-        </div>
+        </section>
     `;
     
-    // Submit Contact Form (Using old Google Apps Script URL)
+    // Bind slider events
+    initHomeSlider();
+    
+    // Bind project card clicks
+    AppMount.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const slug = card.getAttribute('data-slug');
+            window.location.hash = `#/portfolio/${slug}`;
+        });
+    });
+    
+    // Bind contact form submit
+    initContactFormSubmit();
+    
+    // Bind Scroll Spy to highlight menu tabs
+    initScrollSpy();
+}
+
+// Slider logic
+function initHomeSlider() {
+    state.sliderIndex = 0;
+    const slides = AppMount.querySelectorAll('.slide');
+    const dots = AppMount.querySelectorAll('.dot');
+    
+    if (slides.length === 0) return;
+    
+    function showSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        state.sliderIndex = index;
+    }
+    
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const idx = parseInt(dot.getAttribute('data-index'));
+            showSlide(idx);
+        });
+    });
+    
+    state.sliderInterval = setInterval(() => {
+        const nextIdx = (state.sliderIndex + 1) % COVER_IMAGES.length;
+        showSlide(nextIdx);
+    }, 5000);
+}
+
+// Contact form submit logic
+function initContactFormSubmit() {
     const form = document.getElementById('contact-form');
     const submitBtn = document.getElementById('form-submit');
+    const t = UI_STRINGS[state.lang];
+    
+    if (!form) return;
     
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -384,24 +299,22 @@ function renderContact() {
         submitBtn.disabled = true;
         submitBtn.textContent = t.sending;
         
-        // Format body as urlencoded key-value pairs
-        const bodyParams = new URLSearchParams();
-        bodyParams.append('name', name);
-        bodyParams.append('email', email);
-        bodyParams.append('message', message);
-        
-        fetch('https://script.google.com/macros/s/AKfycbymFIHDdybdAd0P4Nm7ox5v8xWSEF-SfNelzVCtdAjlZBV8wD0/exec', {
+        // Formspree AJAX Submission
+        fetch(`https://formspree.io/f/${FORMSPREE_ID.trim()}`, {
             method: 'POST',
-            body: bodyParams,
+            body: JSON.stringify({ name, email, message }),
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            mode: 'no-cors' // Google Apps Script redirects require no-cors mode in normal fetch
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         })
-        .then(() => {
-            // Because no-cors won't return data, we assume success if fetch finishes
-            submitBtn.textContent = t.sent;
-            form.reset();
+        .then(res => {
+            if (res.ok) {
+                submitBtn.textContent = t.sent;
+                form.reset();
+            } else {
+                throw new Error("Formspree response not OK");
+            }
             setTimeout(() => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = t.submit;
@@ -418,11 +331,94 @@ function renderContact() {
     });
 }
 
+// Scroll Spy to track sections and highlight header links
+function initScrollSpy() {
+    if (state.observer) {
+        state.observer.disconnect();
+    }
+    
+    const options = {
+        root: null,
+        rootMargin: '-40% 0px -50% 0px', // center line trigger
+        threshold: 0
+    };
+    
+    state.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && state.currentPage === 'home') {
+                const sectionId = entry.target.id;
+                const activeNavName = sectionId.replace('-section', '');
+                setActiveNavLink(activeNavName);
+            }
+        });
+    }, options);
+    
+    const sections = ['portfolio-section', 'about-section', 'contact-section'];
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) state.observer.observe(el);
+    });
+}
+
+function setActiveNavLink(name) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const target = document.getElementById(`nav-${name}`);
+    if (target) {
+        target.classList.add('active');
+    }
+}
+
+// Renders a Single Project detail view
+function renderProjectDetails() {
+    const p = state.activeProject;
+    const t = UI_STRINGS[state.lang];
+    
+    const curIdx = state.projects.findIndex(proj => proj.id === p.id);
+    const prevProj = state.projects[(curIdx - 1 + state.projects.length) % state.projects.length];
+    const nextProj = state.projects[(curIdx + 1) % state.projects.length];
+    
+    let metaHtml = '';
+    if (p.year || p.location) {
+        metaHtml += `<div class="project-meta">`;
+        if (p.year) metaHtml += `<span><b>${t.years_label}:</b> ${p.year}</span>`;
+        if (p.location) metaHtml += `<span><b>${t.location_label}:</b> ${p.location}</span>`;
+        metaHtml += `</div>`;
+    } else {
+        metaHtml += `<div class="project-meta"><span>${p.summary}</span></div>`;
+    }
+    
+    AppMount.innerHTML = `
+        <div class="section-container">
+            <div class="project-detail-header">
+                <a href="#/home#portfolio-section" class="nav-btn" style="margin-bottom: 25px;">
+                    &larr; ${t.back_to_grid}
+                </a>
+                <h1 class="project-detail-title">${p.title}</h1>
+                ${metaHtml}
+            </div>
+            
+            <article class="project-detail-content">
+                ${parseWriterCommands(p.body)}
+            </article>
+            
+            <div class="project-navigation">
+                <a href="#/portfolio/${cleanTitle(prevProj.title)}" class="nav-btn">
+                    &larr; ${t.prev}: ${prevProj.title}
+                </a>
+                <a href="#/portfolio/${cleanTitle(nextProj.title)}" class="nav-btn">
+                    ${t.next}: ${nextProj.title} &rarr;
+                </a>
+            </div>
+        </div>
+    `;
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // 5. Data Loading Action
 function loadProjects() {
     const url = `/static/arts_${state.lang}.json`;
     
-    // Show spinner
     AppMount.innerHTML = `
         <div class="loader-container">
             <div class="loader"></div>
@@ -436,7 +432,6 @@ function loadProjects() {
         })
         .then(data => {
             state.projects = data;
-            // Update routing mapping now that data is loaded
             handleRoute();
         })
         .catch(err => {
@@ -454,37 +449,68 @@ function loadProjects() {
 function handleRoute() {
     const path = window.location.hash || '#/home';
     const parts = path.split('/');
-    
-    // Parts: ["#", "portfolio", "Tisch_der_Geduld"]
     const mainPage = parts[1] || 'home';
     
-    state.currentPage = mainPage;
-    state.activeProject = null;
+    // Redirect direct routes to home sections (for backward compatibility)
+    if (mainPage === 'portfolio' && !parts[2]) {
+        window.location.hash = '#/home#portfolio-section';
+        return;
+    }
+    if (mainPage === 'about') {
+        window.location.hash = '#/home#about-section';
+        return;
+    }
+    if (mainPage === 'contact') {
+        window.location.hash = '#/home#contact-section';
+        return;
+    }
     
-    // Check if sub route is for project detail
+    // Check if it is a project detail sub-route
     if (mainPage === 'portfolio' && parts[2]) {
         const slug = parts[2];
         const match = state.projects.find(p => cleanTitle(p.title) === slug);
         if (match) {
+            state.currentPage = 'portfolio-detail';
             state.activeProject = match;
+            renderPage();
+            return;
         } else {
-            // Slug not found, go back to portfolio grid
-            window.location.hash = '#/portfolio';
+            window.location.hash = '#/home#portfolio-section';
             return;
         }
     }
     
-    // Update active nav item styles
-    updateNavUI();
-    
-    // Render page
+    // Otherwise render the unified Landing page (slider + sections)
+    state.currentPage = 'home';
+    state.activeProject = null;
     renderPage();
+    
+    // Scroll spy or direct jump to hash section if present in the URL
+    // e.g. path is '#/home#about-section'
+    const hashIdx = path.indexOf('#', 2);
+    if (hashIdx !== -1) {
+        const sectionId = path.substring(hashIdx + 1);
+        setTimeout(() => {
+            const target = document.getElementById(sectionId);
+            if (target) {
+                scrollToSection(target);
+                const activeNavName = sectionId.replace('-section', '');
+                setActiveNavLink(activeNavName);
+            }
+        }, 100);
+    } else {
+        // Scroll back to top if direct hit to home
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveNavLink('portfolio'); // default active link
+    }
+    
+    // Localize Nav strings
+    updateNavUI();
 }
 
 function updateNavUI() {
     const t = UI_STRINGS[state.lang];
     
-    // Localize nav headers
     const pLink = document.getElementById('nav-portfolio');
     const cLink = document.getElementById('nav-contact');
     const aLink = document.getElementById('nav-about');
@@ -493,7 +519,6 @@ function updateNavUI() {
     if (cLink) cLink.textContent = t.contact;
     if (aLink) aLink.textContent = t.about;
     
-    // Toggle label is the ALTERNATE language
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
         langBtn.textContent = state.lang === 'en' ? 'FR' : 'EN';
@@ -507,15 +532,13 @@ function initLightbox() {
     lb.innerHTML = `<img class="lightbox-img" src="" alt="Zoomed view">`;
     document.body.appendChild(lb);
     
-    // Global exposure so standard image onclick calls it
     window.zoomImage = function(src) {
         const lbImg = lb.querySelector('.lightbox-img');
         lbImg.src = src;
         lb.classList.add('active');
-        document.body.style.overflow = 'hidden'; // disable background scroll
+        document.body.style.overflow = 'hidden';
     };
     
-    // Close lightbox listeners
     lb.addEventListener('click', close);
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') close();
@@ -529,25 +552,41 @@ function initLightbox() {
 
 // 8. Bootstrap Initializations
 document.addEventListener('DOMContentLoaded', () => {
-    // Current year in footer
-    const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-    
-    // Initialize image zoom lightbox
     initLightbox();
     
-    // Language Switch button
+    // Header navigation scroll interceptors
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            const name = item.id.replace('nav-', '');
+            const sectionId = `${name}-section`;
+            
+            if (state.currentPage === 'home') {
+                e.preventDefault();
+                const target = document.getElementById(sectionId);
+                if (target) {
+                    scrollToSection(target);
+                    history.pushState(null, null, `#/home#${sectionId}`);
+                    setActiveNavLink(name);
+                }
+            } else {
+                // If on details page, let URL trigger routing back to landing page section
+                window.location.hash = `#/home#${sectionId}`;
+            }
+        });
+    });
+    
+    // Language Toggle button click listener
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
         langBtn.addEventListener('click', () => {
             state.lang = state.lang === 'en' ? 'fr' : 'en';
             localStorage.setItem('imankia_lang', state.lang);
             updateNavUI();
-            loadProjects(); // reload language JSON and re-render
+            loadProjects();
         });
     }
     
-    // Fixed navbar transition on scroll
+    // Navigation bar transparency transitions on scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -557,9 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Bind hashchange listener
     window.addEventListener('hashchange', handleRoute);
     
-    // Initial fetch of projects (triggers routing render)
     loadProjects();
 });

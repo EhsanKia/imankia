@@ -56,6 +56,7 @@ const state = {
     currentPage: 'home', // 'home' (sections page) or 'portfolio-detail'
     projects: [],
     covers: [], // Dynamically loaded home slider covers
+    about: null, // Dynamically loaded About section texts
     activeProject: null,
     sliderIndex: 0,
     sliderInterval: null,
@@ -173,15 +174,10 @@ function renderLandingPage() {
         
         <!-- About Section -->
         <section id="about-section" class="section-container" style="border-top: 1px solid rgba(255,255,255,0.05);">
-            <h2 class="page-title">${t.about}</h2>
+            <h2 class="page-title">${state.about ? state.about[state.lang].title : t.about}</h2>
             <div class="about-layout">
-                <div class="about-img-container">
-                    <img src="/static/img/designing.jpg" alt="Designing" class="about-img">
-                </div>
                 <div class="about-text">
-                    <p>${t.about_p1}</p>
-                    <p>${t.about_p2}</p>
-                    <p>${t.about_p3}</p>
+                    <p>${state.about ? state.about[state.lang].p1 : t.about_p1}</p>
                 </div>
             </div>
         </section>
@@ -409,6 +405,7 @@ function renderProjectDetails() {
 function loadProjects() {
     const artsUrl = `/static/arts_${state.lang}.json`;
     const coversUrl = `/static/covers.json`;
+    const aboutUrl = `/static/about.json`;
     
     AppMount.innerHTML = `
         <div class="loader-container">
@@ -424,11 +421,16 @@ function loadProjects() {
         fetch(coversUrl).then(res => {
             if (!res.ok) throw new Error("Failed to load covers JSON");
             return res.json();
+        }),
+        fetch(aboutUrl).then(res => {
+            if (!res.ok) throw new Error("Failed to load about JSON");
+            return res.json();
         })
     ])
-    .then(([projectsData, coversData]) => {
+    .then(([projectsData, coversData, aboutData]) => {
         state.projects = projectsData;
         state.covers = coversData;
+        state.about = aboutData;
         handleRoute();
     })
     .catch(err => {

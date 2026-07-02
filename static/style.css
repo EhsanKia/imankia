@@ -442,31 +442,17 @@ main {
 
 /* 8. About Page */
 .about-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 50px;
-    align-items: start;
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
-}
-
-.about-img-container {
-    width: 100%;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.about-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
 }
 
 .about-text {
     font-size: 1.15rem;
     line-height: 1.8;
     color: var(--text-secondary);
+    max-width: 760px;
+    width: 100%;
 }
 
 .about-text p {

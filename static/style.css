@@ -329,7 +329,7 @@ main {
 /* 7. Project Details Page */
 .project-detail-header {
     margin-bottom: 50px;
-    text-align: left;
+    text-align: center;
 }
 
 .project-detail-title {
@@ -349,6 +349,7 @@ main {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     display: flex;
+    justify-content: center;
     gap: 15px;
 }
 
@@ -441,6 +442,19 @@ main {
 }
 
 /* 8. About Page */
+#about-section {
+    background-color: #f2f0ef;
+    width: 100%;
+}
+
+#about-section .page-title {
+    color: #282828;
+}
+
+#about-section .page-title::after {
+    background-color: #282828;
+}
+
 .about-layout {
     display: flex;
     justify-content: center;
@@ -450,7 +464,7 @@ main {
 .about-text {
     font-size: 1.15rem;
     line-height: 1.8;
-    color: var(--text-secondary);
+    color: #444444;
     max-width: 760px;
     width: 100%;
 }
@@ -461,13 +475,13 @@ main {
 
 .about-text a {
     font-weight: 700;
-    color: var(--text-primary);
-    border-bottom: 1px solid var(--text-primary);
+    color: #282828;
+    border-bottom: 1px solid #282828;
 }
 
 .about-text a:hover {
-    color: var(--text-muted);
-    border-color: var(--text-muted);
+    color: #666666;
+    border-color: #666666;
 }
 
 /* 9. Contact Page */

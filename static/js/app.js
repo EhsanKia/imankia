@@ -173,11 +173,13 @@ function renderLandingPage() {
         </section>
         
         <!-- About Section -->
-        <section id="about-section" class="section-container" style="border-top: 1px solid rgba(255,255,255,0.05);">
-            <h2 class="page-title">${state.about ? state.about[state.lang].title : t.about}</h2>
-            <div class="about-layout">
-                <div class="about-text">
-                    <p>${state.about ? state.about[state.lang].p1 : t.about_p1}</p>
+        <section id="about-section">
+            <div class="section-container">
+                <h2 class="page-title">${state.about ? state.about[state.lang].title : t.about}</h2>
+                <div class="about-layout">
+                    <div class="about-text">
+                        <p>${state.about ? state.about[state.lang].p1 : t.about_p1}</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -375,10 +377,10 @@ function renderProjectDetails() {
     
     AppMount.innerHTML = `
         <div class="section-container">
+            <a href="#portfolio" class="nav-btn" style="margin-bottom: 25px; display: inline-block;">
+                &larr; ${t.back_to_grid}
+            </a>
             <div class="project-detail-header">
-                <a href="#portfolio" class="nav-btn" style="margin-bottom: 25px;">
-                    &larr; ${t.back_to_grid}
-                </a>
                 <h1 class="project-detail-title">${p.title}</h1>
                 ${metaHtml}
             </div>
@@ -403,9 +405,9 @@ function renderProjectDetails() {
 
 // 5. Data Loading Action
 function loadProjects() {
-    const artsUrl = `/static/arts_${state.lang}.json`;
-    const coversUrl = `/static/covers.json`;
-    const aboutUrl = `/static/about.json`;
+    const artsUrl = `/static/arts_${state.lang}.json?t=${Date.now()}`;
+    const coversUrl = `/static/covers.json?t=${Date.now()}`;
+    const aboutUrl = `/static/about.json?t=${Date.now()}`;
     
     AppMount.innerHTML = `
         <div class="loader-container">

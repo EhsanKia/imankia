@@ -72,7 +72,8 @@ function cleanTitle(text) {
 function parseWriterCommands(data) {
     if (!data) return "";
     let html = data;
-    html = html.replace(/\n/g, '<br>');
+    
+    // Replace markdown tags first
     html = html.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
     html = html.replace(/\*(.*?)\*/g, "<i>$1</i>");
     html = html.replace(/&&\s*(.*?)\s*&&/g, '<h3 class="content-section-title">$1</h3>');
@@ -82,6 +83,18 @@ function parseWriterCommands(data) {
     html = html.replace(/\[vimeo=(.*?)\]/g, '<div class="video-container"><iframe width="700" height="394" src="https://player.vimeo.com/video/$1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>');
     html = html.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
     html = html.replace(/\{(.*?)\}/g, "<div style='text-align:center'>$1</div>");
+    
+    // Convert newlines to <br>
+    html = html.replace(/\n/g, '<br>');
+    
+    // Clean up redundant <br> elements around block elements
+    html = html.replace(/(<img[^>]*>)(\s*<br>)/g, '$1');
+    html = html.replace(/(<br>\s*)(<img[^>]*>)/g, '$2');
+    html = html.replace(/(<\/h3>)(\s*<br>)/g, '$1');
+    html = html.replace(/(<br>\s*)(<h3[^>]*>)/g, '$2');
+    html = html.replace(/(<\/div>)(\s*<br>)/g, '$1');
+    html = html.replace(/(<br>\s*)(<div[^>]*>)/g, '$2');
+    
     return html;
 }
 

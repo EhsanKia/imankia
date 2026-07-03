@@ -369,7 +369,7 @@ main {
 
 /* Writer tags styles */
 .project-detail-content p {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     white-space: pre-line;
 }
 
@@ -389,7 +389,7 @@ main {
     display: block;
     width: 100%;
     height: auto;
-    margin: 40px auto;
+    margin: 20px auto;
     border-radius: 4px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     cursor: pointer;

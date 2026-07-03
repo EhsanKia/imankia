@@ -60,7 +60,8 @@ const state = {
     activeProject: null,
     sliderIndex: 0,
     sliderInterval: null,
-    observer: null
+    observer: null,
+    hasLoadedOnce: false
 };
 
 // 3. Helper Functions
@@ -417,7 +418,7 @@ function renderProjectDetails() {
 }
 
 // 5. Data Loading Action
-function loadProjects() {
+function loadProjects(preserveActiveProjectId = null) {
     const artsUrl = `/static/arts_${state.lang}.json?t=${Date.now()}`;
     const coversUrl = `/static/covers.json?t=${Date.now()}`;
     const aboutUrl = `/static/about.json?t=${Date.now()}`;
@@ -446,6 +447,19 @@ function loadProjects() {
         state.projects = projectsData;
         state.covers = coversData;
         state.about = aboutData;
+        
+        if (preserveActiveProjectId !== null) {
+            const match = state.projects.find(p => p.id === preserveActiveProjectId);
+            if (match) {
+                state.activeProject = match;
+                const newHash = `#/portfolio/${cleanTitle(match.title)}`;
+                if (window.location.hash !== newHash) {
+                    window.location.hash = newHash;
+                    return; // hashchange listener will trigger handleRoute
+                }
+            }
+        }
+        
         handleRoute();
     })
     .catch(err => {
@@ -461,7 +475,8 @@ function loadProjects() {
 
 // 6. SPA Routing Handler
 function handleRoute() {
-    const path = window.location.hash || '#portfolio';
+    // Default route points to the top header (#home)
+    const path = window.location.hash || '#home';
     
     // Check if it is a project detail sub-route (e.g. #/portfolio/slug)
     if (path.startsWith('#/portfolio/') && path.split('/')[2]) {
@@ -473,7 +488,7 @@ function handleRoute() {
             renderPage();
             return;
         } else {
-            window.location.hash = '#portfolio';
+            window.location.hash = '#home';
             return;
         }
     }
@@ -486,16 +501,28 @@ function handleRoute() {
         renderPage();
     }
     
+    const isInitialLoad = !state.hasLoadedOnce;
+    state.hasLoadedOnce = true;
+    
     // Determine section target from hash
     if (path === '#' || path === '' || path === '#home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Instant scroll to top on initial page entry, smooth scroll on later route change
+        window.scrollTo({ top: 0, behavior: isInitialLoad ? 'auto' : 'smooth' });
         setActiveNavLink('portfolio');
     } else {
         // Handle normal hash like #portfolio, #about, #contact
         const cleanHash = path.replace('#', '');
         const target = document.getElementById(`${cleanHash}-section`);
         if (target) {
-            scrollToSection(target);
+            if (isInitialLoad) {
+                // If opening a section link directly, snap instantly to it
+                const navbar = document.getElementById('navbar');
+                const yOffset = navbar ? -navbar.offsetHeight : -80;
+                const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'auto' });
+            } else {
+                scrollToSection(target);
+            }
             setActiveNavLink(cleanHash);
         }
     }
@@ -594,10 +621,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
         langBtn.addEventListener('click', () => {
+            const activeId = (state.currentPage === 'portfolio-detail' && state.activeProject)
+                ? state.activeProject.id
+                : null;
+                
             state.lang = state.lang === 'en' ? 'fr' : 'en';
             localStorage.setItem('imankia_lang', state.lang);
             updateNavUI();
-            loadProjects();
+            loadProjects(activeId);
         });
     }
     
